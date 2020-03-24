@@ -12,6 +12,13 @@ List all changes after the last release here (newer on top). Each change on a se
 
 - Admin: Notification name when deleteing it
 
+## [1.10.9] - 2020-03-24
+
+### Fixed
+
+- Admin: remove pinned /sa/ URL from scripts to support dynamic admin URLs
+- Admin: Fix graphical (incorrect indent) bug in Product / Stock Management
+
 ## [1.10.8] - 2020-03-20
 
 ### Changed
