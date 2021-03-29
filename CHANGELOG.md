@@ -15,6 +15,27 @@ List all changes after the last release here (newer on top). Each change on a se
 
 ### Changed
 
+- Admin: Improve the copy product functionality
+
+### Added
+
+- Admin: add number of received orders in orders menu
+- Admin: add contact CSV exporter
+- CORE: Add .jsx support for shuup_makemessages command
+
+### Fixed
+
+- Admin: prevent exporting products that are not accessible by the current user
+- Fix 'Customize Your Admin Menu' redirecting to the supplier specific edit page on saving.
+- Admin: Fix picotable mobile styling to default to full-width
+- Front: Fail cleanly when visiting a product page without supplier
+
+## [2.5.0] - 2021-03-22
+
+### Changed
+
+- Front: Add so `basket.get_final_lines(with_taxes=True)` gets called after selecting shipping- and payment method.
+  Reason for this is so all the taxes gets calculated before end customers fills in their payment details
 - Core: undeprecate signals for ShopProduct model
 
 ### Added
@@ -59,7 +80,6 @@ List all changes after the last release here (newer on top). Each change on a se
 - Admin: fix product module not to fail on object does not exists
 - Front: update media upload URL from "media-upload/" to "upload-media/"
 - Core: bump attribute name to 256 characters
-
 
 ## [2.3.17] - 2021-02-23
 

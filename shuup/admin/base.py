@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2021, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2021, Shuup Commerce Inc. All rights reserved.
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
 import hashlib
-import warnings
-
 import six
 from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import override
+from typing import Dict, Optional
 
 from shuup.utils.django_compat import reverse
 
@@ -150,7 +149,7 @@ class Resolvable(object):
 class BaseMenuEntry(Resolvable):
     identifier = None
     name = None
-    icon = ''
+    icon = ""
     is_hidden = False
     ordering = -1
     entries = []
@@ -158,7 +157,7 @@ class BaseMenuEntry(Resolvable):
     @property
     def id(self):
         """ Value containing only hexadecimal digits, we can use this safely in html code. """
-        return hashlib.md5(str(self.identifier).encode('utf8')).hexdigest()
+        return hashlib.md5(str(self.identifier).encode("utf8")).hexdigest()
 
     @property
     def has_entries(self):
@@ -166,12 +165,12 @@ class BaseMenuEntry(Resolvable):
 
     def to_dict(self):
         return {
-            'id': self.id,
-            'url': self.url,
-            'name': str(self.name),
-            'icon': self.icon,
-            'is_hidden': self.is_hidden,
-            'entries': [e.to_dict() for e in self.entries],
+            "id": self.id,
+            "url": self.url,
+            "name": str(self.name),
+            "icon": self.icon,
+            "is_hidden": self.is_hidden,
+            "entries": [e.to_dict() for e in self.entries],
         }
 
     def get(self, item, default=None):
@@ -193,12 +192,6 @@ class MenuEntry(BaseMenuEntry):
         self.ordering = ordering
         self.aliases = tuple(aliases)
 
-        if "subcategory" in kwargs:
-            warnings.warn(
-                "Warning! `subcategory` attribute will be deprecated in Shuup 2.0 as unused for this util.",
-                DeprecationWarning
-            )
-
     @property
     def identifier(self):
         return self._url
@@ -215,6 +208,21 @@ class MenuEntry(BaseMenuEntry):
         yield self.text
         for alias in self.aliases:
             yield alias
+
+    def get_text(self, request) -> str:
+        return self.text
+
+    def get_badge(self, request) -> Optional[Dict]:
+        """
+        Should return a dictionary with the information of the badge or None:
+        ```
+        {
+            "tag": "info|success|danger|warning",
+            "value": "my value"
+        }
+        ```
+        """
+        return None
 
 
 class SearchResult(Resolvable):
@@ -290,6 +298,7 @@ class Section(object):
                set a file which contains js code inside a <script> tag.
     `order` the order.
     """
+
     identifier = ""
     name = ""
     icon = ""
